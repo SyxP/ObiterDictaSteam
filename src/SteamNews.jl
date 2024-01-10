@@ -43,15 +43,14 @@ end
 
 function getTitle(entry)
     Date = string(unix2datetime(get(entry, "date", 0)))
-    return Date * " " * get(entry, "title", "")
+    return replace(Date * " " * get(entry, "title", ""), ":" => "_")
 end
 
-function getSteamNews(dir = "../Data/News/", numEntries = 20)
+function getSteamNews(dir = "data/News/"; numEntries = 20)
     mkpath(dir)
     entries = getSteamNewsJSON(numEntries)
     for entry in entries
         fullPath = joinpath(dir, getTitle(entry) * ".txt")
-        @info fullPath
         isfile(fullPath) && continue
         open(fullPath, "w") do io
            println(io, getContent(entry))
