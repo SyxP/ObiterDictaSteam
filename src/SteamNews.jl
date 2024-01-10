@@ -43,18 +43,31 @@ end
 
 function getTitle(entry)
     Date = string(unix2datetime(get(entry, "date", 0)))
-    return replace(Date * " " * get(entry, "title", ""), ":" => "_")
+    return replace(Date * " " * get(entry, "title", ""), ":" => "_", "/" => "_")
 end
 
-function getSteamNews(dir = "data/News/"; numEntries = 20)
+function getSteamNews(dir = "data/"; numEntries = 20)
     mkpath(dir)
+    mkpath(joinpath(dir, "News/"))
+
+    SteamLinkPath = joinpath(dir, "SteamLinks.json")
+    DB = Dict{String, Any}()
+    hasfile(SteamLinkPath) && (DB = JSON.parsefile(SteamLinkPath))
+
     entries = getSteamNewsJSON(numEntries)
     for entry in entries
-        fullPath = joinpath(dir, getTitle(entry) * ".txt")
+        fileName = getTitle(entry) * ".txt"
+        fullPath = joinpath(dir, "News/", fileName)
+        DB[fileName] = get(entry, "url", "")
+
         isfile(fullPath) && continue
         open(fullPath, "w") do io
            println(io, getContent(entry))
         end
+    end
+
+    open(SteamLinkPath, "w") do io
+        println(io, JSON.json(DB))
     end
 
     return
