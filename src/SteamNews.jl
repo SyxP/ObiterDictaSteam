@@ -1,9 +1,9 @@
-function getSteamURL(count = 50)
+function getSteamURL(count)
     return SteamNewsURL = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=1973530&count=$count&format=json"
 end
 
-function getSteamNewsJSON()
-    data = Downloads.download(getSteamURL())
+function getSteamNewsJSON(count)
+    data = Downloads.download(getSteamURL(count))
     return JSON.parsefile(data)["appnews"]["newsitems"]
 end
 
@@ -44,4 +44,19 @@ end
 function getTitle(entry)
     Date = string(unix2datetime(get(entry, "date", 0)))
     return Date * " " * get(entry, "title", "")
+end
+
+function getSteamNews(dir = "../Data/News/", numEntries = 20)
+    mkpath(dir)
+    entries = getSteamNewsJSON(numEntries)
+    for entry in entries
+        fullPath = joinpath(dir, getTitle(entry) * ".txt")
+        @info fullPath
+        isfile(fullPath) && continue
+        open(fullPath, "w") do io
+           println(io, getContent(entry))
+        end
+    end
+
+    return
 end

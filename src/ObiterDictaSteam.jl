@@ -3,4 +3,6 @@ module ObiterDictaSteam
 
     include("SteamNews.jl")
     include("OpenAIVision.jl")
+
+    export getSteamNews
 end
