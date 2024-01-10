@@ -43,7 +43,7 @@ end
 
 function getTitle(entry)
     Date = string(unix2datetime(get(entry, "date", 0)))
-    return replace(Date * " " * get(entry, "title", ""), ":" => "_", "/" => "_")
+    return replace(Date * " " * get(entry, "title", ""), ":" => "_", "/" => "_", ">" => "")
 end
 
 function getSteamNews(dir = "data/"; numEntries = 20)
@@ -52,7 +52,7 @@ function getSteamNews(dir = "data/"; numEntries = 20)
 
     SteamLinkPath = joinpath(dir, "SteamLinks.json")
     DB = Dict{String, Any}()
-    hasfile(SteamLinkPath) && (DB = JSON.parsefile(SteamLinkPath))
+    isfile(SteamLinkPath) && (DB = JSON.parsefile(SteamLinkPath; use_mmap = false))
 
     entries = getSteamNewsJSON(numEntries)
     for entry in entries
@@ -67,7 +67,7 @@ function getSteamNews(dir = "data/"; numEntries = 20)
     end
 
     open(SteamLinkPath, "w") do io
-        println(io, JSON.json(DB))
+        JSON.print(io, DB, 4)
     end
 
     return
