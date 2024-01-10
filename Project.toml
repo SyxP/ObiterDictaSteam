@@ -3,6 +3,13 @@ uuid = "3ed64e2b-e9be-4c13-bdcb-38b7b855ef21"
 authors = ["Syx Pek <20557013+SyxP@users.noreply.github.com> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+
 [compat]
 julia = "1"
 
