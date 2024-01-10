@@ -1,0 +1,13 @@
+name = "ObiterDictaSteam"
+uuid = "3ed64e2b-e9be-4c13-bdcb-38b7b855ef21"
+authors = ["Syx Pek <20557013+SyxP@users.noreply.github.com> and contributors"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
