@@ -43,7 +43,7 @@ end
 
 function getTitle(entry)
     Date = string(unix2datetime(get(entry, "date", 0)))
-    return replace(Date * " " * get(entry, "title", ""), ":" => "_", "/" => "_", ">" => "")
+    return replace(Date * " " * get(entry, "title", ""), ":" => "_", "/" => "_", ">" => "", "~" => "")
 end
 
 function getSteamNews(dir = "data/"; numEntries = 20)
