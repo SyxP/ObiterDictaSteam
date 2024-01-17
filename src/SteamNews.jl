@@ -13,7 +13,7 @@ end
 
 function extractImageURL(str :: String)
     SteamClanImageURL = "https://clan.cloudflare.steamstatic.com/images/"
-    S = eachmatch(r"\[img\](.*)\[/img\]", str)
+    S = eachmatch(r"\[img\]([^\[]]*)\[/img\]", str)
     Links = String[]
     
     for match in S
